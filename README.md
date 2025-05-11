@@ -58,7 +58,7 @@ It handles the creation, management, and tracking of freelance job projects (als
 
 ---
 
-## 📦 Environment Variables
+⚙️ Environment Variables
 
 DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/projects_db
 KAFKA_BOOTSTRAP_SERVERS=kafka:9092
@@ -66,37 +66,20 @@ JWT_SECRET=your_jwt_secret_key
 
 ---
 
-## 🧰 Useful Commands
-
-```bash
-# Apply migrations
-alembic upgrade head
-
-# Run REST service
-uvicorn app.main:app --reload
-
-# Run gRPC server
-python app/presentation/grpc/run_grpc.py
-
-✅ Example Kafka Events
-
-// project.created
-{
-  "project_id": "uuid",
-  "client_id": "uuid",
-  "title": "Build a Website",
-  "timestamp": "ISO-8601"
-}
 🧰 Usage
+
 # Run REST service
-uvicorn app.main:app --reload
+make build
+make up
+make logs
+
+This uses the Makefile for running the project from the parent directory.
 
 # Run gRPC server
 python app/presentation/grpc/run_grpc.py
 
 # Apply database migrations
 alembic upgrade head
-
 
 📬 gRPC Interface
 
@@ -106,16 +89,25 @@ service ProjectService {
   rpc GetProjectById(ProjectIdRequest) returns (ProjectResponse);
 }
 
+📊 Kafka Event Example
+
+{
+  "project_id": "uuid",
+  "client_id": "uuid",
+  "title": "Build a Website",
+  "timestamp": "2025-01-01T12:00:00Z"
+}
+
 🔒 Authorization
 
-All endpoints require a valid JWT token:
+All HTTP endpoints require a valid JWT token:
 
 Authorization: Bearer <access_token>
 
 📈 Next Goals
 
-    Add Redis caching for listing active projects
+Add Redis caching for listing active projects
 
-    Add search & filtering
+Add search & filtering options
 
-    Add tests & CI/CD
+Add test coverage and CI/CD pipeline
