@@ -1,0 +1,29 @@
+# --- Core ---
+fastapi
+uvicorn[standard]
+pydantic
+python-dotenv
+
+# --- Security ---
+python-jose[cryptography]
+
+# --- Database: PostgreSQL ---
+asyncpg
+sqlalchemy[asyncio]
+alembic
+psycopg2-binary
+
+# --- Redis ---
+redis>=4.2.0
+
+# --- Kafka ---
+aiokafka
+
+# gRPC
+grpcio
+grpcio-tools
+
+# --- Testing ---
+pytest
+pytest-asyncio
+httpx

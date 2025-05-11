@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package project;
+
+service ProjectService {
+  rpc GetProjectById (GetProjectRequest) returns (ProjectResponse);
+}
+
+message GetProjectRequest {
+  string project_id = 1;
+}
+
+message ProjectResponse {
+  string project_id = 1;
+  string client_id = 2;
+  string status = 3; // "open", "in_progress", etc.
+}
