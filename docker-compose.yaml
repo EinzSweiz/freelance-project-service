@@ -25,9 +25,11 @@ services:
     ports:
       - "5434:5432"
     volumes:
+      - ./init:/docker-entrypoint-initdb.d
       - pgdata_project:/var/lib/postgresql/data
     networks:
       - config
+      
   grpc_server:
     build: .
     command: ["python", "app/presentation/grpc/run_grpc.py"]

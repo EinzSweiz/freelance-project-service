@@ -26,7 +26,6 @@ class ProjectServiceHandler(project_pb2_grpc.ProjectServiceServicer):
                 client_id=str(project.client_id),
                 status=project.status.value,
             )
-
         except ProjectNotFound as e:
             self.logger.warning(f"ProjectNotFound exception: {e}")
             return await context.abort(grpc.StatusCode.NOT_FOUND, str(e))

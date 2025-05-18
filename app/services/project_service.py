@@ -43,6 +43,7 @@ class ProjectService:
             topic=KAFKA_TOPICS["project_updated"],
             event={
                 "project_id": str(project.id),
+                "client_id": str(project.client_id),
                 "title": project.title,
                 "timestamp": datetime.now().isoformat()
             }
@@ -51,12 +52,17 @@ class ProjectService:
         return project
 
     async def delete_project(self, project_id: UUID) -> None:
+        project = await self.project_repo.get_by_id(project_id)
+        if not project:
+            self.logger.warning(f"Project not found for update: {project_id}")
+            raise ProjectNotFound(f"Project {project_id} not found")
         await self.project_repo.delete(project_id)
         self.logger.info(f"Project deleted: {project_id}")
         await self.kafka_producer.send(
             topic=KAFKA_TOPICS["project_deleted"],
             event={
                 "project_id": str(project_id),
+                "client_id": str(project.client_id),
                 "timestamp": datetime.now().isoformat()
             }
         )
